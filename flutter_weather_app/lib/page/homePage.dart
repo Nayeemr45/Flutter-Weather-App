@@ -31,9 +31,13 @@ class _HomePageState extends State<HomePage> {
   }
 
   var _cities = [
-    "dhaka",
-    "rome",
-    "milan",
+    "Dhaka",
+    "Toronto",
+    "Rome",
+    "Milan",
+    "New York",
+    "Delhi",
+    "Beijing",
   ];
   String city = "dhaka";
   var temp;
@@ -85,36 +89,9 @@ class _HomePageState extends State<HomePage> {
             Column(
               children: [
                 Container(
-                  padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
                   child: Text(
                     "$city".toUpperCase(),
                     style: TextStyle(fontSize: 20, color: Colors.black),
-                  ),
-                ),
-              ],
-            ),
-            Column(
-              children: [
-                Container(
-                  padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                  child: Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: SmoothPageIndicator(
-                        controller: controller,
-                        count: 2,
-                        effect: WormEffect(
-                            // spacing: 8.0,
-                            // radius: 4.0,
-                            dotWidth: 4.0,
-                            dotHeight: 4.0,
-                            dotColor: Colors.grey,
-                            // paintStyle: PaintingStyle.stroke,
-                            // strokeWidth: 2,
-                            activeDotColor: Colors.black),
-                      ),
-                    ),
                   ),
                 ),
               ],
