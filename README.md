@@ -1,8 +1,9 @@
-# Flutter-Weather-App
+# Flutter-Weather-App ☁
 ---
 - User Can select 🏙️ City from 🔽 Dropdown 
-- User Can 🔄 Refresh from ⋮ More 🔽 Dropdown Button
+- User Can 🔄 Refresh from ⋮ More 🔽 Dropdown Button 
 
+- Here I use ☁ OpenWeather Api to get the 🌤 Weather Data
 ---
 
 <p float="left">
