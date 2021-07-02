@@ -155,8 +155,7 @@ class _HomePageState extends State<HomePage> {
                   child: Container(
                     //color: Color(0xff222831),
                     color: Colors.white,
-                    // height: size.height * 0.95,
-                    height: size.height * 0.95,
+                    //height: size.height,
                     child: temp != null
                         ? Column(
                             children: <Widget>[
@@ -170,11 +169,11 @@ class _HomePageState extends State<HomePage> {
                                     child: Text(
                                       "Please select a city :",
                                       textAlign: TextAlign.start,
-                                      style: TextStyle(fontSize: 20),
+                                      style: TextStyle(fontSize: 14),
                                     ),
                                   ),
                                   Container(
-                                    height: 60,
+                                    height: 65,
                                     width: size.width * 0.5,
                                     alignment: Alignment.topLeft,
                                     color: Colors.white,
@@ -199,7 +198,7 @@ class _HomePageState extends State<HomePage> {
                                                   border: OutlineInputBorder(
                                                       borderRadius:
                                                           BorderRadius.circular(
-                                                              5.0))),
+                                                              30.0))),
                                               isEmpty: _chosenValue == '',
                                               child:
                                                   DropdownButtonHideUnderline(
@@ -240,7 +239,7 @@ class _HomePageState extends State<HomePage> {
                                 ],
                               ),
                               Container(
-                                height: size.height * 0.45,
+                                height: size.height * 0.4,
                                 width: size.width,
                                 color: Colors.white,
                                 alignment: Alignment.center,
@@ -274,9 +273,7 @@ class _HomePageState extends State<HomePage> {
                                                             image: NetworkImage(
                                                                 "https://openweathermap.org/img/wn/$icon@2x.png",
                                                                 scale: 0.5))
-                                                        : FaIcon(
-                                                            FontAwesomeIcons
-                                                                .spinner)
+                                                        : CircularProgressIndicator()
                                                   ],
                                                 ),
                                               ),
@@ -296,6 +293,7 @@ class _HomePageState extends State<HomePage> {
                                                           FontAwesomeIcons
                                                               .arrowDown,
                                                           size: 14,
+                                                          color: Colors.white54,
                                                         ),
                                                       ),
                                                     ),
@@ -310,7 +308,9 @@ class _HomePageState extends State<HomePage> {
                                                                   "\u00B0" +
                                                                   " C",
                                                               style: TextStyle(
-                                                                  fontSize: 14),
+                                                                  fontSize: 14,
+                                                                  color: Colors
+                                                                      .white54),
                                                             )
                                                           : FaIcon(
                                                               FontAwesomeIcons
@@ -321,10 +321,11 @@ class _HomePageState extends State<HomePage> {
                                                         padding:
                                                             EdgeInsets.all(5),
                                                         child: FaIcon(
-                                                          FontAwesomeIcons
-                                                              .arrowUp,
-                                                          size: 14,
-                                                        ),
+                                                            FontAwesomeIcons
+                                                                .arrowUp,
+                                                            size: 14,
+                                                            color:
+                                                                Colors.white54),
                                                       ),
                                                     ),
                                                     Container(
@@ -338,7 +339,9 @@ class _HomePageState extends State<HomePage> {
                                                                   "\u00B0" +
                                                                   " C",
                                                               style: TextStyle(
-                                                                  fontSize: 14),
+                                                                  fontSize: 14,
+                                                                  color: Colors
+                                                                      .white54),
                                                             )
                                                           : FaIcon(
                                                               FontAwesomeIcons
@@ -367,7 +370,7 @@ class _HomePageState extends State<HomePage> {
                                                           TextAlign.center,
                                                       text: TextSpan(
                                                         style: GoogleFonts.lato(
-                                                            color: Colors.black,
+                                                            color: Colors.white,
                                                             fontSize: 80,
                                                             fontWeight:
                                                                 FontWeight
@@ -385,7 +388,7 @@ class _HomePageState extends State<HomePage> {
                                                               : TextSpan(
                                                                   style: GoogleFonts.rubik(
                                                                       color: Colors
-                                                                          .black,
+                                                                          .white,
                                                                       fontSize:
                                                                           10),
                                                                   children: [
@@ -408,7 +411,9 @@ class _HomePageState extends State<HomePage> {
                                                                         .center,
                                                                 style: TextStyle(
                                                                     fontSize:
-                                                                        30),
+                                                                        30,
+                                                                    color: Colors
+                                                                        .white),
                                                               ),
                                                             ),
                                                           ),
@@ -416,7 +421,7 @@ class _HomePageState extends State<HomePage> {
                                                       ),
                                                     ),
                                                     Text(
-                                                      "Feels Like :" +
+                                                      "Feels Like: " +
                                                           ((feelsLike - 32) *
                                                                   5 /
                                                                   9)
@@ -427,7 +432,9 @@ class _HomePageState extends State<HomePage> {
                                                       textAlign:
                                                           TextAlign.start,
                                                       style: TextStyle(
-                                                          fontSize: 14),
+                                                          fontSize: 14,
+                                                          color:
+                                                              Colors.white54),
                                                     ),
                                                   ],
                                                 ),
@@ -437,134 +444,6 @@ class _HomePageState extends State<HomePage> {
                                         ],
                                       ),
                                     ),
-                                    // Container(
-                                    //   child: Column(
-                                    //     children: [
-                                    //       Row(
-                                    //         mainAxisAlignment:
-                                    //             MainAxisAlignment.center,
-                                    //         crossAxisAlignment:
-                                    //             CrossAxisAlignment.center,
-                                    //         children: [
-                                    //           icon != null
-                                    //               ? Image(
-                                    //                   image: NetworkImage(
-                                    //                       "https://openweathermap.org/img/wn/$icon@2x.png",
-                                    //                       scale: 0.8))
-                                    //               : FaIcon(
-                                    //                   FontAwesomeIcons.spinner)
-                                    //         ],
-                                    //       ),
-                                    //       Row(
-                                    //         mainAxisAlignment:
-                                    //             MainAxisAlignment.center,
-                                    //         crossAxisAlignment:
-                                    //             CrossAxisAlignment.center,
-                                    //         children: [
-                                    //           RichText(
-                                    //             textAlign: TextAlign.center,
-                                    //             text: TextSpan(
-                                    //               style: GoogleFonts.lato(
-                                    //                   color: Colors.black,
-                                    //                   fontSize: 110),
-                                    //               children: [
-                                    //                 temp != null
-                                    //                     ? TextSpan(
-                                    //                         text: ((temp - 32) *
-                                    //                                 5 /
-                                    //                                 9)
-                                    //                             .toStringAsFixed(
-                                    //                                 0),
-                                    //                       )
-                                    //                     : TextSpan(
-                                    //                         style: GoogleFonts
-                                    //                             .rubik(
-                                    //                                 color: Colors
-                                    //                                     .black,
-                                    //                                 fontSize:
-                                    //                                     20),
-                                    //                         children: [
-                                    //                             TextSpan(
-                                    //                               text:
-                                    //                                   "Loading",
-                                    //                             )
-                                    //                           ]),
-                                    //                 WidgetSpan(
-                                    //                   child:
-                                    //                       Transform.translate(
-                                    //                     offset: const Offset(
-                                    //                         0.0, -80.0),
-                                    //                     child: Text(
-                                    //                       "\u00B0" + " C",
-                                    //                       textAlign:
-                                    //                           TextAlign.center,
-                                    //                       style: TextStyle(
-                                    //                           fontSize: 30),
-                                    //                     ),
-                                    //                   ),
-                                    //                 ),
-                                    //               ],
-                                    //             ),
-                                    //           )
-                                    //         ],
-                                    //       ),
-                                    //       Row(
-                                    //         mainAxisAlignment:
-                                    //             MainAxisAlignment.center,
-                                    //         crossAxisAlignment:
-                                    //             CrossAxisAlignment.center,
-                                    //         children: [
-                                    //           Container(
-                                    //             child: Padding(
-                                    //               padding: EdgeInsets.all(5),
-                                    //               child: FaIcon(
-                                    //                 FontAwesomeIcons.arrowDown,
-                                    //                 size: 14,
-                                    //               ),
-                                    //             ),
-                                    //           ),
-                                    //           Container(
-                                    //             child: tempMin != null
-                                    //                 ? Text(
-                                    //                     ((tempMin - 32) * 5 / 9)
-                                    //                             .toStringAsFixed(
-                                    //                                 0) +
-                                    //                         "\u00B0" +
-                                    //                         " C",
-                                    //                     style: TextStyle(
-                                    //                         fontSize: 14),
-                                    //                   )
-                                    //                 : FaIcon(FontAwesomeIcons
-                                    //                     .spinner),
-                                    //           ),
-                                    //           Container(
-                                    //             child: Padding(
-                                    //               padding: EdgeInsets.all(5),
-                                    //               child: FaIcon(
-                                    //                 FontAwesomeIcons.arrowUp,
-                                    //                 size: 14,
-                                    //               ),
-                                    //             ),
-                                    //           ),
-                                    //           Container(
-                                    //             child: tempMax != null
-                                    //                 ? Text(
-                                    //                     ((tempMax - 32) * 5 / 9)
-                                    //                             .toStringAsFixed(
-                                    //                                 0) +
-                                    //                         "\u00B0" +
-                                    //                         " C",
-                                    //                     style: TextStyle(
-                                    //                         fontSize: 14),
-                                    //                   )
-                                    //                 : FaIcon(FontAwesomeIcons
-                                    //                     .spinner),
-                                    //           ),
-                                    //         ],
-                                    //       ),
-                                    //     ],
-                                    //   ),
-                                    // ),
                                   ],
                                 ),
                               ),
@@ -737,7 +616,16 @@ class _HomePageState extends State<HomePage> {
                             ],
                           )
                         : Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
+                              Container(
+                                  alignment: Alignment.center,
+                                  width: size.width,
+                                  height: size.height * 0.8,
+                                  child: Text(
+                                    "Please Wait",
+                                    style: GoogleFonts.lato(fontSize: 20),
+                                  )),
                               Container(
                                 alignment: Alignment.center,
                                 width: size.width,
