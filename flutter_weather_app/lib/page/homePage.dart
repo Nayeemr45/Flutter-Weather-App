@@ -33,6 +33,7 @@ class _HomePageState extends State<HomePage> {
   var temp;
   var tempMin;
   var tempMax;
+  var feelsLike;
   var description;
   var weatherMain;
   var humidity;
@@ -48,6 +49,7 @@ class _HomePageState extends State<HomePage> {
       this.temp = results['main']['temp'];
       this.tempMin = results['main']['temp_min'];
       this.tempMax = results['main']['temp_max'];
+      this.feelsLike = results['main']['feels_like'];
       this.description = results['weather'][0]['description'];
       this.weatherMain = results['weather'][0]['main'];
       this.humidity = results['main']['humidity'];
@@ -151,77 +153,91 @@ class _HomePageState extends State<HomePage> {
               child: SafeArea(
                 child: SingleChildScrollView(
                   child: Container(
-                    color: Color(0xff222831),
-                    height: size.height,
+                    //color: Color(0xff222831),
+                    color: Colors.white,
+                    // height: size.height * 0.95,
+                    height: size.height * 0.95,
                     child: temp != null
                         ? Column(
                             children: <Widget>[
-                              Container(
-                                width: size.width,
-                                color: Colors.white,
-                                height: 25,
-                                padding: EdgeInsets.only(left: 10),
-                                child: Text(
-                                  "Please select a city",
-                                  textAlign: TextAlign.start,
-                                  style: TextStyle(fontSize: 20),
-                                ),
-                              ),
-
-                              Container(
-                                height: 65,
-                                color: Colors.white,
-                                child: Column(
-                                  children: [
-                                    FormField<String>(
-                                      builder: (FormFieldState<String> state) {
-                                        return InputDecorator(
-                                          decoration: InputDecoration(
-                                              // labelText: "Please select a city",
-                                              // labelStyle: TextStyle(color: Colors.black,fontSize: 22.0),
-                                              errorStyle: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 16.0,
-                                                  fontWeight: FontWeight.w300),
-                                              // hintText: 'Please select a city',
-                                              // hintStyle: TextStyle(color: Colors.black),
-                                              border: OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          5.0))),
-                                          isEmpty: _chosenValue == '',
-                                          child: DropdownButtonHideUnderline(
-                                            child: DropdownButton<String>(
-                                              value: _chosenValue,
-                                              style: TextStyle(
-                                                  color: Colors.white),
-                                              isDense: true,
-                                              onChanged: (newValue) {
-                                                setState(() {
-                                                  _chosenValue = newValue;
-                                                  city = _chosenValue;
-                                                  getWeather();
-                                                  state.didChange(newValue);
-                                                });
-                                              },
-                                              items:
-                                                  _cities.map((String value) {
-                                                return DropdownMenuItem<String>(
-                                                  value: value,
-                                                  child: Text(
-                                                    value,
-                                                    style: TextStyle(
-                                                        color: Colors.black),
-                                                  ),
-                                                );
-                                              }).toList(),
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                    )
-                                  ],
-                                ),
+                              Row(
+                                children: [
+                                  Container(
+                                    width: size.width * 0.4,
+                                    color: Colors.white,
+                                    height: 25,
+                                    padding: EdgeInsets.only(left: 10),
+                                    child: Text(
+                                      "Please select a city :",
+                                      textAlign: TextAlign.start,
+                                      style: TextStyle(fontSize: 20),
+                                    ),
+                                  ),
+                                  Container(
+                                    height: 60,
+                                    width: size.width * 0.5,
+                                    alignment: Alignment.topLeft,
+                                    color: Colors.white,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        FormField<String>(
+                                          builder:
+                                              (FormFieldState<String> state) {
+                                            return InputDecorator(
+                                              decoration: InputDecoration(
+                                                  // labelText: "Please select a city",
+                                                  // labelStyle: TextStyle(color: Colors.black,fontSize: 22.0),
+                                                  errorStyle: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 16.0,
+                                                      fontWeight:
+                                                          FontWeight.w300),
+                                                  // hintText: 'Please select a city',
+                                                  // hintStyle: TextStyle(color: Colors.black),
+                                                  border: OutlineInputBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5.0))),
+                                              isEmpty: _chosenValue == '',
+                                              child:
+                                                  DropdownButtonHideUnderline(
+                                                child: DropdownButton<String>(
+                                                  value: _chosenValue,
+                                                  style: TextStyle(
+                                                      color: Colors.white),
+                                                  isDense: true,
+                                                  onChanged: (newValue) {
+                                                    setState(() {
+                                                      _chosenValue = newValue;
+                                                      city = _chosenValue;
+                                                      getWeather();
+                                                      state.didChange(newValue);
+                                                    });
+                                                  },
+                                                  items: _cities
+                                                      .map((String value) {
+                                                    return DropdownMenuItem<
+                                                        String>(
+                                                      value: value,
+                                                      child: Text(
+                                                        value,
+                                                        style: TextStyle(
+                                                            color:
+                                                                Colors.black),
+                                                      ),
+                                                    );
+                                                  }).toList(),
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ],
                               ),
                               Container(
                                 height: size.height * 0.45,
@@ -233,171 +249,322 @@ class _HomePageState extends State<HomePage> {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
                                     Container(
-                                      child: Column(
+                                      height: size.height * 0.25,
+                                      width: size.width * 0.9,
+                                      decoration: BoxDecoration(
+                                        color: Colors.indigo[300],
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
+                                          Column(
                                             children: [
-                                              icon != null
-                                                  ? Image(
-                                                      image: NetworkImage(
-                                                          "https://openweathermap.org/img/wn/$icon@2x.png",
-                                                          scale: 0.8))
-                                                  : FaIcon(
-                                                      FontAwesomeIcons.spinner)
-                                            ],
-                                          ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              RichText(
-                                                textAlign: TextAlign.center,
-                                                text: TextSpan(
-                                                  style: GoogleFonts.lato(
-                                                      color: Colors.black,
-                                                      fontSize: 110),
+                                              Container(
+                                                padding: EdgeInsets.fromLTRB(
+                                                    20, 20, 0, 0),
+                                                // height: 200,
+                                                width: 80,
+                                                // color: Colors.redAccent,
+                                                child: Column(
                                                   children: [
-                                                    temp != null
-                                                        ? TextSpan(
-                                                            text: ((temp - 32) *
-                                                                    5 /
-                                                                    9)
-                                                                .toStringAsFixed(
-                                                                    0),
-                                                          )
-                                                        : TextSpan(
-                                                            style: GoogleFonts
-                                                                .rubik(
-                                                                    color: Colors
-                                                                        .black,
-                                                                    fontSize:
-                                                                        20),
-                                                            children: [
-                                                                TextSpan(
-                                                                  text:
-                                                                      "Loading",
-                                                                )
-                                                              ]),
-                                                    WidgetSpan(
-                                                      child:
-                                                          Transform.translate(
-                                                        offset: const Offset(
-                                                            0.0, -80.0),
-                                                        child: Text(
-                                                          "\u00B0" + " C",
-                                                          textAlign:
-                                                              TextAlign.center,
-                                                          style: TextStyle(
-                                                              fontSize: 30),
+                                                    icon != null
+                                                        ? Image(
+                                                            image: NetworkImage(
+                                                                "https://openweathermap.org/img/wn/$icon@2x.png",
+                                                                scale: 0.5))
+                                                        : FaIcon(
+                                                            FontAwesomeIcons
+                                                                .spinner)
+                                                  ],
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.fromLTRB(
+                                                        20, 30, 0, 0),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Container(
+                                                      child: Padding(
+                                                        padding:
+                                                            EdgeInsets.all(5),
+                                                        child: FaIcon(
+                                                          FontAwesomeIcons
+                                                              .arrowDown,
+                                                          size: 14,
                                                         ),
                                                       ),
+                                                    ),
+                                                    Container(
+                                                      child: tempMin != null
+                                                          ? Text(
+                                                              ((tempMin - 32) *
+                                                                          5 /
+                                                                          9)
+                                                                      .toStringAsFixed(
+                                                                          0) +
+                                                                  "\u00B0" +
+                                                                  " C",
+                                                              style: TextStyle(
+                                                                  fontSize: 14),
+                                                            )
+                                                          : FaIcon(
+                                                              FontAwesomeIcons
+                                                                  .spinner),
+                                                    ),
+                                                    Container(
+                                                      child: Padding(
+                                                        padding:
+                                                            EdgeInsets.all(5),
+                                                        child: FaIcon(
+                                                          FontAwesomeIcons
+                                                              .arrowUp,
+                                                          size: 14,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Container(
+                                                      child: tempMax != null
+                                                          ? Text(
+                                                              ((tempMax - 32) *
+                                                                          5 /
+                                                                          9)
+                                                                      .toStringAsFixed(
+                                                                          0) +
+                                                                  "\u00B0" +
+                                                                  " C",
+                                                              style: TextStyle(
+                                                                  fontSize: 14),
+                                                            )
+                                                          : FaIcon(
+                                                              FontAwesomeIcons
+                                                                  .spinner),
                                                     ),
                                                   ],
                                                 ),
                                               )
                                             ],
                                           ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              Container(
-                                                child: Padding(
-                                                  padding: EdgeInsets.all(5),
-                                                  child: FaIcon(
-                                                    FontAwesomeIcons.arrowDown,
-                                                    size: 14,
-                                                  ),
-                                                ),
-                                              ),
-                                              Container(
-                                                child: tempMin != null
-                                                    ? Text(
-                                                        ((tempMin - 32) * 5 / 9)
-                                                                .toStringAsFixed(
-                                                                    0) +
-                                                            "\u00B0" +
-                                                            " C",
-                                                        style: TextStyle(
-                                                            fontSize: 14),
-                                                      )
-                                                    : FaIcon(FontAwesomeIcons
-                                                        .spinner),
-                                              ),
-                                              Container(
-                                                child: Padding(
-                                                  padding: EdgeInsets.all(5),
-                                                  child: FaIcon(
-                                                    FontAwesomeIcons.arrowUp,
-                                                    size: 14,
-                                                  ),
-                                                ),
-                                              ),
-                                              Container(
-                                                child: tempMax != null
-                                                    ? Text(
-                                                        ((tempMax - 32) * 5 / 9)
-                                                                .toStringAsFixed(
-                                                                    0) +
-                                                            "\u00B0" +
-                                                            " C",
-                                                        style: TextStyle(
-                                                            fontSize: 14),
-                                                      )
-                                                    : FaIcon(FontAwesomeIcons
-                                                        .spinner),
-                                              ),
-                                            ],
-                                          ),
                                           Column(
                                             children: [
-                                              // DropdownButton<String>(
-                                              //   focusColor: Colors.white,
-                                              //   value: _chosenValue,
-                                              //   elevation: 5,
-                                              //   style: TextStyle(color: Colors.white),
-                                              //   iconEnabledColor: Colors.black,
-                                              //   items: <String>[
-                                              //     'Android',
-                                              //     'IOS',
-                                              //     'Flutter',
-                                              //     'Node',
-                                              //     'Java',
-                                              //     'Python',
-                                              //     'PHP',
-                                              //   ].map<DropdownMenuItem<String>>(
-                                              //       (String value) {
-                                              //     return DropdownMenuItem<String>(
-                                              //       value: value,
-                                              //       child: Text(
-                                              //         value,
-                                              //         style:
-                                              //             TextStyle(color: Colors.black),
-                                              //       ),
-                                              //     );
-                                              //   }).toList(),
-                                              //   hint: Text(
-                                              //     "Please choose a langauage",
-                                              //     style: TextStyle(
-                                              //         color: Colors.black,
-                                              //         fontSize: 14,
-                                              //         fontWeight: FontWeight.w500),
-                                              //   ),
-
-                                              // ),
+                                              Container(
+                                                padding: EdgeInsets.fromLTRB(
+                                                    0, 20, 20, 0),
+                                                // color: Colors.yellowAccent,
+                                                alignment: Alignment.bottomLeft,
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    RichText(
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      text: TextSpan(
+                                                        style: GoogleFonts.lato(
+                                                            color: Colors.black,
+                                                            fontSize: 80,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w600),
+                                                        children: [
+                                                          temp != null
+                                                              ? TextSpan(
+                                                                  text: ((temp -
+                                                                              32) *
+                                                                          5 /
+                                                                          9)
+                                                                      .toStringAsFixed(
+                                                                          0),
+                                                                )
+                                                              : TextSpan(
+                                                                  style: GoogleFonts.rubik(
+                                                                      color: Colors
+                                                                          .black,
+                                                                      fontSize:
+                                                                          10),
+                                                                  children: [
+                                                                      TextSpan(
+                                                                        text:
+                                                                            "Loading",
+                                                                      )
+                                                                    ]),
+                                                          WidgetSpan(
+                                                            child: Transform
+                                                                .translate(
+                                                              offset:
+                                                                  const Offset(
+                                                                      0.0,
+                                                                      -55.0),
+                                                              child: Text(
+                                                                "\u00B0" + " C",
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        30),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      "Feels Like :" +
+                                                          ((feelsLike - 32) *
+                                                                  5 /
+                                                                  9)
+                                                              .toStringAsFixed(
+                                                                  0) +
+                                                          "\u00B0" +
+                                                          " C",
+                                                      textAlign:
+                                                          TextAlign.start,
+                                                      style: TextStyle(
+                                                          fontSize: 14),
+                                                    ),
+                                                  ],
+                                                ),
+                                              )
                                             ],
                                           ),
                                         ],
                                       ),
                                     ),
+                                    // Container(
+                                    //   child: Column(
+                                    //     children: [
+                                    //       Row(
+                                    //         mainAxisAlignment:
+                                    //             MainAxisAlignment.center,
+                                    //         crossAxisAlignment:
+                                    //             CrossAxisAlignment.center,
+                                    //         children: [
+                                    //           icon != null
+                                    //               ? Image(
+                                    //                   image: NetworkImage(
+                                    //                       "https://openweathermap.org/img/wn/$icon@2x.png",
+                                    //                       scale: 0.8))
+                                    //               : FaIcon(
+                                    //                   FontAwesomeIcons.spinner)
+                                    //         ],
+                                    //       ),
+                                    //       Row(
+                                    //         mainAxisAlignment:
+                                    //             MainAxisAlignment.center,
+                                    //         crossAxisAlignment:
+                                    //             CrossAxisAlignment.center,
+                                    //         children: [
+                                    //           RichText(
+                                    //             textAlign: TextAlign.center,
+                                    //             text: TextSpan(
+                                    //               style: GoogleFonts.lato(
+                                    //                   color: Colors.black,
+                                    //                   fontSize: 110),
+                                    //               children: [
+                                    //                 temp != null
+                                    //                     ? TextSpan(
+                                    //                         text: ((temp - 32) *
+                                    //                                 5 /
+                                    //                                 9)
+                                    //                             .toStringAsFixed(
+                                    //                                 0),
+                                    //                       )
+                                    //                     : TextSpan(
+                                    //                         style: GoogleFonts
+                                    //                             .rubik(
+                                    //                                 color: Colors
+                                    //                                     .black,
+                                    //                                 fontSize:
+                                    //                                     20),
+                                    //                         children: [
+                                    //                             TextSpan(
+                                    //                               text:
+                                    //                                   "Loading",
+                                    //                             )
+                                    //                           ]),
+                                    //                 WidgetSpan(
+                                    //                   child:
+                                    //                       Transform.translate(
+                                    //                     offset: const Offset(
+                                    //                         0.0, -80.0),
+                                    //                     child: Text(
+                                    //                       "\u00B0" + " C",
+                                    //                       textAlign:
+                                    //                           TextAlign.center,
+                                    //                       style: TextStyle(
+                                    //                           fontSize: 30),
+                                    //                     ),
+                                    //                   ),
+                                    //                 ),
+                                    //               ],
+                                    //             ),
+                                    //           )
+                                    //         ],
+                                    //       ),
+                                    //       Row(
+                                    //         mainAxisAlignment:
+                                    //             MainAxisAlignment.center,
+                                    //         crossAxisAlignment:
+                                    //             CrossAxisAlignment.center,
+                                    //         children: [
+                                    //           Container(
+                                    //             child: Padding(
+                                    //               padding: EdgeInsets.all(5),
+                                    //               child: FaIcon(
+                                    //                 FontAwesomeIcons.arrowDown,
+                                    //                 size: 14,
+                                    //               ),
+                                    //             ),
+                                    //           ),
+                                    //           Container(
+                                    //             child: tempMin != null
+                                    //                 ? Text(
+                                    //                     ((tempMin - 32) * 5 / 9)
+                                    //                             .toStringAsFixed(
+                                    //                                 0) +
+                                    //                         "\u00B0" +
+                                    //                         " C",
+                                    //                     style: TextStyle(
+                                    //                         fontSize: 14),
+                                    //                   )
+                                    //                 : FaIcon(FontAwesomeIcons
+                                    //                     .spinner),
+                                    //           ),
+                                    //           Container(
+                                    //             child: Padding(
+                                    //               padding: EdgeInsets.all(5),
+                                    //               child: FaIcon(
+                                    //                 FontAwesomeIcons.arrowUp,
+                                    //                 size: 14,
+                                    //               ),
+                                    //             ),
+                                    //           ),
+                                    //           Container(
+                                    //             child: tempMax != null
+                                    //                 ? Text(
+                                    //                     ((tempMax - 32) * 5 / 9)
+                                    //                             .toStringAsFixed(
+                                    //                                 0) +
+                                    //                         "\u00B0" +
+                                    //                         " C",
+                                    //                     style: TextStyle(
+                                    //                         fontSize: 14),
+                                    //                   )
+                                    //                 : FaIcon(FontAwesomeIcons
+                                    //                     .spinner),
+                                    //           ),
+                                    //         ],
+                                    //       ),
+                                    //     ],
+                                    //   ),
+                                    // ),
                                   ],
                                 ),
                               ),
@@ -406,9 +573,12 @@ class _HomePageState extends State<HomePage> {
 
                               Container(
                                 height: size.height * 0.3,
-                                width: size.width,
+                                width: size.width * 0.95,
                                 alignment: Alignment.center,
-                                color: Color(0xff222831),
+                                decoration: BoxDecoration(
+                                  color: Color(0xff222831),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
                                 child: Padding(
                                   padding: EdgeInsets.fromLTRB(
                                       size.width * 0.016,
